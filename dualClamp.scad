@@ -1,6 +1,6 @@
 use <e3d_v6_all_metall_hotend.scad>;
 
-partNumber = 2;
+partNumber = 0;
 
 mountingHoleOffset = 15;
 
@@ -16,6 +16,11 @@ fanOffset = 25;
 
 wireStandWidth = 20;
 wireStandHeight = 10;
+
+rM3Threaded = 1.49;
+rM3Through = 1.75;
+rM3Head = 3.1;
+rm3Nut = 3.3;
 
 /*
 rotate([0,0,90])
@@ -96,17 +101,17 @@ difference()
 					translate([0, 5.5 - i*1.5, 7])
 					rotate([0, 90, 0])
 					translate([0,0,-1])
-					cylinder(r = 1.5, h = 6, $fn=30);
+					cylinder(r = rM3Through, h = 6, $fn=30);
 
 					translate([0, 5.5 - i*1.5, 17])
 					rotate([0, 90, 0])
 					translate([0,0,-1])
-					cylinder(r = 1.5, h = 6, $fn=30);
+					cylinder(r = rM3Through, h = 6, $fn=30);
 
 					translate([0, 5.5 - i*1.5, 27.0])
 					rotate([0, 90, 0])
 					translate([0,0,-1])
-					cylinder(r = 1.5, h = 6, $fn=30);
+					cylinder(r = rM3Through, h = 6, $fn=30);
 				}
 			}
 
@@ -154,7 +159,7 @@ difference()
 	{
 		translate([fanOffset, distance/2, 20+sinkH-fanWidth/2])
 		rotate([0,90,0])
-		cylinder(r = (fanWidth)/2-1, h = fanMountingPlateThickness+1);
+		cylinder(r = (fanWidth)/2-1.5, h = fanMountingPlateThickness+1, $fn=100);
 
 		translate([sinkR, -sinkR, 22])
 		cube([0.01,distance+2*sinkR+2*tolerance, sinkH-4]);
@@ -163,10 +168,10 @@ difference()
 
 	// heatsink cylinder cuts
     translate([0, distance, 20-1])
-    cylinder(r=sinkR+tolerance, h=sinkH+2);
+    cylinder(r=sinkR+tolerance, h=sinkH+2, $fn=100);
 
     translate([0, 0, 20-1])
-    cylinder(r=sinkR+tolerance, h=sinkH+2);
+    cylinder(r=sinkR+tolerance, h=sinkH+2, $fn=100);
 
 	// cleanup of junk between cylinders
 	translate([-3, distance/2 - 1, 19])
@@ -208,9 +213,9 @@ difference()
 		{
 			translate([0,0,30])
 			rotate([0,0,-30])
-			cylinder(r = 3, h = 50, $fn = 30);
+			cylinder(r = rM3Head, h = 50, $fn = 30);
 			translate([0,0,-40.4+55])
-			cylinder(r = 1.5, h = 15, $fn = 30);
+			cylinder(r = rM3Through, h = 15, $fn = 30);
 		}
 	}
 	
@@ -218,13 +223,13 @@ difference()
 	for(i=[-1,1])
 	for(j=[-1,1])
 	{
-		translate([0, (fanWidth-4)/2*i, (fanWidth-4)/2*j])
+		translate([0, 16*i, 16*j])
 		translate([fanOffset-4, distance/2, 20+sinkH-fanWidth/2])
 		rotate([0,90,0])
-		cylinder(r = 1.3, h = 17, $fn=30);
+		cylinder(r = rM3Threaded, h = 17, $fn=30);
 	}
 
-//	translate([-10,distance/2,0])
+//	translate([-10,distance/2-100,0])
 //	cube([100, 100, 100]);
 }
 
@@ -238,7 +243,7 @@ module farClamp()
 		union()
 		{
 			translate([-15, -(8+11), 4])
-			cube([15, distance+(8+11)*2, 12]);
+			cube([14, distance+(8+11)*2, 12]);
 
 			// top fin
 			hull()
@@ -280,23 +285,23 @@ module farClamp()
 			}
 		}
 
-		// caridge mounting holes
+		// carridge mounting holes
 		rotate([0, 90, 0])
 		translate([-10, distance/2 - mountingHoleOffset, -11])
 		union()
 		{
-			cylinder(r = 3, h = 15, $fn = 30);
+			cylinder(r = rM3Head, h = 15, $fn = 30);
 			translate([0,0,-10])
-			cylinder(r = 1.5, h = 30, $fn = 30);
+			cylinder(r = rM3Through, h = 30, $fn = 30);
 		}
 
 		rotate([0, 90, 0])
 		translate([-10, distance/2 + mountingHoleOffset, -11])
 		union()
 		{
-			cylinder(r = 3, h = 15, $fn = 30);
+			cylinder(r = rM3Head, h = 15, $fn = 30);
 			translate([0,0,-10])
-			cylinder(r = 1.5, h = 30, $fn = 30);
+			cylinder(r = rM3Through, h = 30, $fn = 30);
 		}
 
 		// clamp mounting holes
@@ -308,9 +313,9 @@ module farClamp()
 			{
 				translate([0,0,-1])
 				rotate([0,0,30])
-				cylinder(r = 2.9, h = 10, $fn = 6);
+				cylinder(r = rm3Nut, h = 10, $fn = 6);
 				translate([0, 0, 9.3])
-				cylinder(r = 1.5, h = 30, $fn = 30);
+				cylinder(r = rM3Through, h = 30, $fn = 30);
 			}
 		}
 
@@ -318,11 +323,21 @@ module farClamp()
 		// fin holes
 		translate([-16, distance/2,  -wireStandHeight + 4])
 		rotate([0,90,0])
-		#cylinder(r = 1.5, h = 50);
+		#cylinder(r = rM3Through, h = 50);
 		*/
 
-//		translate([-90,0,10])
+//		translate([-90,-100+distance/2,-10])
 //		cube([100, 100, 100]);
+/*
+		translate([-10,-50+distance/2,-10])
+		cube([100, 100, 100]);
+
+		translate([-20,-50+distance/2,-96])
+		cube([100, 100, 100]);
+
+		translate([-20,-50+distance/2, 16])
+		cube([100, 100, 100]);
+*/
 	}
 }
 

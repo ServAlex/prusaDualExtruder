@@ -16,7 +16,7 @@ URL E3D v6: http://wiki.e3d-online.com/wiki/E3D-v6_Documentation
 // resolution of round object. each line segment is fnr mm long. fnr = 1 crude and good for development (its faster), aim for fnr = 0.4 or smaller for a production render. smaller means more details (and a lot more time to render).
 fnresolution = 0.4;
 // detail level
-detaillevel = 1; // [0:coarse render only outlines,1:fine render with all details]
+detaillevel = 0; // [0:coarse render only outlines,1:fine render with all details]
 
 // ######################################################################################################################
 print_part();
