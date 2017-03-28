@@ -14,6 +14,8 @@ fanThickness = 10;
 fanMountingPlateThickness = 5;
 fanOffset = 25;
 
+wireStandWidth = 20;
+wireStandHeight = 10;
 
 /*
 rotate([0,0,90])
@@ -233,8 +235,50 @@ module farClamp()
 
 	difference()
 	{
-		translate([-15, -(8+11), 4])
-		cube([15, distance+(8+11)*2, 12]);
+		union()
+		{
+			translate([-15, -(8+11), 4])
+			cube([15, distance+(8+11)*2, 12]);
+
+			// top fin
+			hull()
+			{
+				translate([-15, -15+distance/2, 4])
+				cube([3, 30, 3]);
+
+				translate([-15, -wireStandWidth/2 +distance/2, 4-wireStandHeight])
+				cube([3, wireStandWidth, 3]);
+			}
+
+			hull()
+			{
+				translate([-15, -1.5+distance/2, 4])
+				cube([10, 3, 3]);
+
+				translate([-15, -1.5+distance/2, 4-wireStandHeight*2/3])
+				cube([3, 3, wireStandHeight*2/3]);
+			}
+
+			// bottom fin
+			bottomFinHeight = 10;
+			hull()
+			{
+				translate([-15, -15+distance/2, 4+12-3])
+				cube([3, 30, 3]);
+
+				translate([-15, -wireStandWidth/2 +distance/2, 4+12 + bottomFinHeight])
+				cube([3, wireStandWidth, 3]);
+			}
+
+			hull()
+			{
+				translate([-15, -1.5+distance/2, 4+12-3])
+				cube([7, 3, 3]);
+
+				translate([-15, -1.5+distance/2, 4+12])
+				cube([3, 3, bottomFinHeight]);
+			}
+		}
 
 		// caridge mounting holes
 		rotate([0, 90, 0])
@@ -269,6 +313,13 @@ module farClamp()
 				cylinder(r = 1.5, h = 30, $fn = 30);
 			}
 		}
+
+		/*
+		// fin holes
+		translate([-16, distance/2,  -wireStandHeight + 4])
+		rotate([0,90,0])
+		#cylinder(r = 1.5, h = 50);
+		*/
 
 //		translate([-90,0,10])
 //		cube([100, 100, 100]);
