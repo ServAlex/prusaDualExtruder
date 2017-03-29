@@ -22,6 +22,8 @@ rM3Through = 1.75;
 rM3Head = 3.1;
 rm3Nut = 3.3;
 
+dualClamp();
+//#perifery();
 
 module perifery()
 {
@@ -33,8 +35,6 @@ module perifery()
 	translate([fanOffset + fanMountingPlateThickness, distance/2 - fanWidth/2, 20+sinkH-fanWidth])
 	cube([fanThickness, fanWidth, fanWidth]);
 }
-
-//dualClamp();
 
 module dualClamp()
 {
@@ -78,6 +78,7 @@ module dualClamp()
 				}
 
 				// led shroud
+/*
 				translate([fanOffset+fanMountingPlateThickness-2, distance/2 - (fanWidth)/2, 20+sinkH])
 				{
 					cube([2, fanWidth, 4]);
@@ -86,6 +87,7 @@ module dualClamp()
 					translate([-18, fanWidth-2, 0])
 					cube([20, 2, 4]);
 				}
+*/
 
 				// part fan mounts
 				for(i=[-1,1])
@@ -159,6 +161,10 @@ module dualClamp()
 			translate([0, -sinkR, 22])
 			cube([sinkR,distance+2*sinkR+2*tolerance, sinkH-4]);
 		}
+
+		// part fan cut
+		translate([fanOffset - 10, distance/2 - 14.8, sinkH + 17])
+		cube([12, 29.6, 4]);
 
 		// inside air transfet tube
 		hull()
@@ -235,8 +241,90 @@ module dualClamp()
 			cylinder(r = rM3Threaded, h = 17, $fn=30);
 		}
 
-	//	translate([-10,distance/2-100,0])
-	//	cube([100, 100, 100]);
+//		translate([-10,distance/2-100,0])
+//		cube([100, 100, 100]);
+	}
+
+	// devider wall
+	difference()
+	{
+		hull()
+		{
+			translate([fanOffset - 12+1, -sinkR, sinkH + 18])
+			cube([1, distance+2*sinkR, 1]);
+
+			translate([fanOffset+fanMountingPlateThickness, distance/2 - (fanWidth)/2, 5+sinkH])
+			cube([0.1, fanWidth, 2]);
+		}
+		perifery();
+	}
+
+	partFan();
+}
+
+module partFan()
+{
+	difference()
+	{
+		union()
+		{
+			difference()
+			{
+
+				hull()
+				{
+					translate([fanOffset - 12, distance/2 - 15, sinkH + 18 + 0.5])
+					cube([16, 30, 1.5]);
+
+					translate([8-1, distance/2 - (fanWidth)/2, sinkH+20+17])
+					cube([8, fanWidth, 0.1]);
+				}
+
+				hull()
+				{
+					translate([fanOffset - 12 +2 + 1.5, distance/2 - 15 +1, sinkH + 18 - 2])
+					cube([11, 28, 2]);
+
+					translate([8+1 -1, distance/2 - (fanWidth)/2 + 1, sinkH+20+17+0.01])
+					cube([6, fanWidth-2, 0.1]);
+				}
+
+		//		translate([-10,distance/2-100,0])
+		//		cube([100, 100, 100]);
+			}
+
+			intersection()
+			{
+				union()
+				{
+					wallW = 0.8;
+
+					translate([0, distance/2, 50])
+					cube([100, wallW, 100], center=true);
+
+					translate([0, distance/2 + distance/3, 50])
+					rotate([-6, 0, 0])
+					cube([100, wallW, 100], center=true);
+
+					translate([0, distance/2 - distance/3, 50])
+					rotate([+6, 0, 0])
+					cube([100, wallW, 100], center=true);
+				}
+
+				hull()
+				{
+					translate([fanOffset - 12, distance/2 - 15, sinkH + 18 + 0.5])
+					cube([16, 30, 1.5]);
+
+					translate([8-1, distance/2 - (fanWidth)/2, sinkH+20+17])
+					cube([8, fanWidth, 0.1]);
+				}
+			}
+		}
+
+		translate([-35, -50, 8])
+		rotate([0, -50, 0])
+		cube([100, 150, 100]);
 	}
 }
 

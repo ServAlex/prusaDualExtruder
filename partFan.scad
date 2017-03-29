@@ -5,12 +5,14 @@ translate([0,-distance/2,43+22])
 rotate([0,180,0])
 {
 	dualClamp();
-//	#perifery();
+	#perifery();
 }
 
+/*
 partFan();
-//rotate([0,0,180])
-//partFan();
+rotate([0,0,180])
+partFan();
+*/
 
 nozzleRadius = 35;
 nozzleHeight = 15;
