@@ -54,8 +54,8 @@ module dualClamp()
 
 						hull()
 						{
-							translate([fanOffset, distance/2 - (fanWidth-4)/2, 20+sinkH-fanWidth])
-							cube([fanMountingPlateThickness, fanWidth-4, fanWidth]);
+							translate([fanOffset, distance/2 - (fanWidth-3)/2, 20+sinkH-fanWidth])
+							cube([fanMountingPlateThickness, fanWidth-3, fanWidth]);
 
 							translate([sinkR, -sinkR, 20])
 							cube([0.01,distance+2*sinkR+2*tolerance, sinkH]);
@@ -90,6 +90,7 @@ module dualClamp()
 */
 
 				// part fan mounts
+/*
 				for(i=[-1,1])
 				{
 					translate([fanOffset+fanMountingPlateThickness-4, distance/2 -5.5 -((fanWidth)/2 + 5.5 - 1.5)*i, 20+sinkH - 32])
@@ -122,18 +123,19 @@ module dualClamp()
 						cylinder(r = rM3Through, h = 6, $fn=30);
 					}
 				}
+*/
 
 				// inductive sensor mount
-				translate([-7.5, -distance/2-29, 46-3])
+				translate([-2, -distance/2-30, 46-3])
 				{
 					difference()
 					{
-						cube([15, 20+9, 3]);
+						cube([17, 20+9+1, 3]);
 
-						translate([15/2, 6 + 2, -1])
+						translate([17/2, 6 + 2+1, -1])
 						cylinder(r = 6, h = 5, $fn=30);
 
-						translate([15/2, 12 + 2 + 2 + 4, -1-40])
+						translate([17/2, 12 + 2 + 2 + 4 + 1, -1-40])
 						cylinder(r = 4, h = 50, $fn=30);
 					}
 				}
@@ -147,7 +149,7 @@ module dualClamp()
 
 		
 		// proximity sensor cut
-		translate([-7.5, -distance/2-29, 46-3])
+		translate([-2, -distance/2-29, 46-3])
 		translate([15/2, 12 + 2 + 2 + 4, -1-60])
 		cylinder(r = 5, h = 50, $fn=30);
 
@@ -171,11 +173,15 @@ module dualClamp()
 		{
 			translate([fanOffset, distance/2, 20+sinkH-fanWidth/2])
 			rotate([0,90,0])
-			cylinder(r = (fanWidth)/2-1.5, h = fanMountingPlateThickness+1, $fn=100);
+			cylinder(r = (fanWidth)/2-0.6, h = fanMountingPlateThickness-1, $fn=100);
 
 			translate([sinkR, -sinkR, 22])
 			cube([0.01,distance+2*sinkR+2*tolerance, sinkH-4]);
 		}
+
+		translate([fanOffset, distance/2, 20+sinkH-fanWidth/2])
+		rotate([0,90,0])
+		cylinder(r = (fanWidth)/2-0.6, h = fanMountingPlateThickness+1, $fn=100);
 
 
 		// heatsink cylinder cuts
@@ -273,8 +279,8 @@ module partFan()
 
 				hull()
 				{
-					translate([fanOffset - 12, distance/2 - 15, sinkH + 18 + 0.5])
-					cube([16, 30, 1.5]);
+					translate([fanOffset - 12, distance/2 - 15.5, sinkH + 18 + 0.5])
+					cube([16, 31, 1.5]);
 
 					translate([8-1, distance/2 - (fanWidth)/2, sinkH+20+17])
 					cube([8, fanWidth, 0.1]);
