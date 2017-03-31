@@ -139,6 +139,8 @@ module dualClamp()
 						cylinder(r = 4, h = 50, $fn=30);
 					}
 				}
+
+//				fanExtension();
 			}
 
 			if(partNumber == 2 || partNumber == 0)
@@ -244,7 +246,7 @@ module dualClamp()
 			translate([0, 16*i, 16*j])
 			translate([fanOffset-4, distance/2, 20+sinkH-fanWidth/2])
 			rotate([0,90,0])
-			cylinder(r = rM3Threaded, h = 17, $fn=30);
+			cylinder(r = rM3Threaded, h = 120, $fn=30);
 		}
 
 //		translate([-10,distance/2-100,0])
@@ -266,6 +268,62 @@ module dualClamp()
 	}
 
 	partFan();
+}
+
+module fanExtension()
+{
+	// fan extension tube
+	difference()
+	{
+		extensionLen = 30;
+		union()
+		{
+			translate([fanOffset+10, distance/2, 20+sinkH-fanWidth/2])
+			rotate([0,90,0])
+			cylinder(r = (fanWidth)/2-0.6 + 1, h = extensionLen, $fn=100);
+
+			translate([fanOffset+13, distance/2, 20+sinkH-fanWidth/2])
+			translate([0, - fanWidth/2 + 3, - fanWidth/2 + 3])
+			rotate([0,-90,0])
+			minkowski()
+			{
+				cube([fanWidth-6, fanWidth-6, 3]);
+				cylinder(r = 3, h = 0.001);
+			}
+
+			translate([fanOffset+10 + extensionLen, distance/2, 20+sinkH-fanWidth/2])
+			hull()
+			{
+				translate([0, - fanWidth/2 + 3, - fanWidth/2 + 3])
+				rotate([0,-90,0])
+				minkowski()
+				{
+					cube([fanWidth-6, fanWidth-6, 1]);
+					cylinder(r = 3, h = 0.001);
+				}
+
+				translate([-10,0,0])
+				rotate([0,90,0])
+				translate([0,0,-1])
+				cylinder(r = (fanWidth)/2-0.6, h = 3, $fn=100);
+			}
+		}
+
+		translate([fanOffset+10, distance/2, 20+sinkH-fanWidth/2])
+		rotate([0,90,0])
+		translate([0,0,-1])
+		cylinder(r = (fanWidth)/2-0.6, h = extensionLen+2, $fn=100);
+
+		// mountin holes
+		for(i=[-1,1])
+		for(j=[-1,1])
+		{
+			translate([0, 16*i, 16*j])
+			translate([fanOffset-4, distance/2, 20+sinkH-fanWidth/2])
+			rotate([0,90,0])
+			cylinder(r = rM3Threaded, h = 120, $fn=30);
+		}
+	}
 }
 
 module partFan()
