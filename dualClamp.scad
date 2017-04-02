@@ -23,7 +23,7 @@ rM3Head = 3.1;
 rm3Nut = 3.3;
 
 dualClamp();
-//#perifery();
+#perifery();
 
 module perifery()
 {
